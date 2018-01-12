@@ -211,7 +211,7 @@ public class RobotRace extends Base {
 
           
         // Draw the axis frame.
-        if (!gs.showAxes) {
+        if (gs.showAxes) {
             drawAxisFrame();
         }
         
@@ -248,12 +248,11 @@ public class RobotRace extends Base {
      * and origin (yellow).
      */
     public void drawAxisFrame() {
-        //Origin
+            //Origin
         gl.glPushMatrix();
             gl.glColor3d(90,90,0);
-            glut.glutSolidSphere(0.1, 50, 50);
+            glut.glutSolidSphere(0.2, 50, 50);
         gl.glPopMatrix();
-
         gl.glPushMatrix();
             //Z-axis
             gl.glColor3d(0,0,90);
@@ -262,15 +261,16 @@ public class RobotRace extends Base {
         gl.glPushMatrix();
             //X-axis
             gl.glColor3d(90,0,0);
-            gl.glRotated(90.0, 1, 0, 0);
+            gl.glRotated(90.0, 0, 1, 0);
             drawArrow();
         gl.glPopMatrix();
         gl.glPushMatrix();
             //Y-axis
             gl.glColor3d(0,90,0);
-            gl.glRotated(90.0, 0, 1, 0);
+            gl.glRotated(-90.0, 1, 0, 0);
             drawArrow();
         gl.glPopMatrix();
+        gl.glDisable(GL_BLEND);
     }
     
     /**

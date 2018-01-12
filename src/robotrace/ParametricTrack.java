@@ -16,7 +16,7 @@ public class ParametricTrack extends RaceTrack {
     @Override
     protected Vector getTangent(double t) {
 
-        return new Vector(-10*Math.sin(2*Math.PI*t)*2*Math.PI,24*Math.PI*Math.cos(2*Math.PI*t),0);
+        return new Vector(-20*Math.PI*Math.sin(2*Math.PI*t),28*Math.PI*Math.cos(2*Math.PI*t),0).normalized();
 
     }
     
