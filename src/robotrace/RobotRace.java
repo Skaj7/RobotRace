@@ -70,7 +70,8 @@ public class RobotRace extends Base {
     
     /** Instance of the terrain. */
     private final Terrain terrain;
-        
+       
+    
     /**
      * Constructs this robot race by initializing robots,
      * camera, track, and terrain.
@@ -119,6 +120,18 @@ public class RobotRace extends Base {
         
         // Initialize the terrain
         terrain = new Terrain();
+        
+        // How far each robot has run
+        double[] robotTArray = new double[4];
+        for(int i = 0; i < 4; i ++) {
+            robotTArray[i] = 0;
+        }
+        
+        // Position robots at start line
+        robots[0].position = raceTracks[gs.trackNr].getLanePoint(0, robotTArray[0]);
+        robots[1].position = raceTracks[gs.trackNr].getLanePoint(1, robotTArray[1]);
+        robots[2].position = raceTracks[gs.trackNr].getLanePoint(2, robotTArray[2]);
+        robots[3].position = raceTracks[gs.trackNr].getLanePoint(3, robotTArray[3]);
     }
     
     /**
@@ -150,6 +163,8 @@ public class RobotRace extends Base {
         // Try to load and set up shader programs
         ShaderPrograms.setupShaders(gl, glu);
         reportError("shaderProgram");
+        
+        
         
     }
    
@@ -205,31 +220,36 @@ public class RobotRace extends Base {
         gl.glColor3f(0f, 0f, 0f);
         
         gl.glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-        
 
-        // Draw hierarchy example.
-
-          
         // Draw the axis frame.
         if (gs.showAxes) {
             drawAxisFrame();
         }
         
-        // Draw the (first) robot.
+        // Update the robots' t values
+        double[] robotTArray = new double[4];
+        for(int i = 0; i < 4; i ++) {
+            robotTArray[i] = gs.tAnim/(double)4;
+        }
         
-           
-        //drawHierarchy();
+        // Position robots
+        robots[0].position = raceTracks[gs.trackNr].getLanePoint(0, robotTArray[0]);
+        robots[1].position = raceTracks[gs.trackNr].getLanePoint(1, robotTArray[1]);
+        robots[2].position = raceTracks[gs.trackNr].getLanePoint(2, robotTArray[2]);
+        robots[3].position = raceTracks[gs.trackNr].getLanePoint(3, robotTArray[3]);
+        
+        // Orient robots
+        robots[0].direction = raceTracks[gs.trackNr].getLaneTangent(0, robotTArray[0]);
+        robots[1].direction = raceTracks[gs.trackNr].getLaneTangent(1, robotTArray[1]);
+        robots[2].direction = raceTracks[gs.trackNr].getLaneTangent(2, robotTArray[2]);
+        robots[3].direction = raceTracks[gs.trackNr].getLaneTangent(3, robotTArray[3]);
+        
+        // Draw robots
         gl.glUseProgram(robotShader.getProgramID()); 
-        robots[0].position = new Vector(-1.5,0,0);
         robots[0].draw(gl, glu, glut, gs.tAnim);//, raceTracks[0].getLanePoint(0, gs.tAnim/3), raceTracks[0].getLaneTangent(0, gs.tAnim/3));
-        robots[1].position = new Vector(-0.5,0,0);
         robots[1].draw(gl, glu, glut, gs.tAnim);//, raceTracks[0].getLanePoint(1, gs.tAnim/20), raceTracks[0].getLaneTangent(1, gs.tAnim/20));
-        robots[2].position = new Vector(0.5,0,0);
         robots[2].draw(gl, glu, glut, gs.tAnim);//,raceTracks[0].getLanePoint(2, gs.tAnim/20), raceTracks[0].getLaneTangent(2, gs.tAnim/20));   
-        robots[3].position = new Vector(1.5,0,0);
         robots[3].draw(gl, glu, glut, gs.tAnim);//,raceTracks[0].getLanePoint(3, gs.tAnim/20), raceTracks[0].getLaneTangent(3, gs.tAnim/20));
-        //robots[0].draw(gl, glu, glut, );
-        
         
         // Draw the race track.
         gl.glUseProgram(trackShader.getProgramID());
