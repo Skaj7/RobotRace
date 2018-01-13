@@ -9,89 +9,97 @@ import static com.jogamp.opengl.GL2.*;
  * Implementation of a race track that is made from Bezier segments.
  */
 abstract class RaceTrack {
-    
-    /** The width of one lane. The total width of the track is 4 * laneWidth. */
+
+    /**
+     * The width of one lane. The total width of the track is 4 * laneWidth.
+     */
     private final static float laneWidth = 1.22f;
-    
-    
-    
+    private final static double quadsPerLane = 100;
+    private final static double textureRepetitionsLengthwise = 10;
+
     /**
      * Constructor for the default track.
      */
     public RaceTrack() {
     }
 
-
-    
     /**
      * Draws this track, based on the control points.
      */
     public void draw(GL2 gl, GLU glu, GLUT glut) {
         // show center TODO debug
-        gl.glLineWidth(3.0f);
-        gl.glBegin (GL2.GL_LINES);
-        gl.glColor3d(90,90,0);
-        for(int i = 0; i < 100; i++) {
-            double t = (double)i/100;
+        /*gl.glLineWidth(3.0f);
+        gl.glColor3d(90,0,0);
+        gl.glBegin(GL2.GL_LINES);
+        for (int i = 0; i < 100; i++) {
+            double t = (double) i / 100;
             Vector centerPoint = getPoint(t);
             Vector tangentVector = getTangent(t);
             Vector nextPoint = centerPoint.add(tangentVector);
             gl.glVertex3d(centerPoint.x, centerPoint.y, centerPoint.z);
             gl.glVertex3d(nextPoint.x, nextPoint.y, nextPoint.z);
         }
-        gl.glEnd();
+        gl.glEnd();*/
         
         Textures.track.bind(gl);
-        gl.glPushMatrix();
-        gl.glScaled(1, 1, 1);
-        for(int i = 0; i < 100; i++) {
-            gl.glColor3f(0f, 0f, 0f);
-            double t = (double)i/100;
-            Vector centerPoint = getPoint(t);
-            Vector tangentVector = getTangent(t);
-            Vector inwardsVector = new Vector(0,0,1).cross(tangentVector).scale(40.22);
-            Vector outwardsVector = inwardsVector.scale(-1);
+        gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        gl.glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        Vector inner;
+        Vector outer;
+        Vector middlePoint;
+        Vector tangentVector;
+        Vector inwardsVector;
+        for (int i = 0; i < 4; i++) {
             gl.glBegin(GL_QUAD_STRIP);
-            for(int j = 0; j < 4; j++) {
-                gl.glVertex3d(0,0,0);
-                gl.glVertex3d(1,0,0);
+            for (int j = 0; j <= quadsPerLane; j++) {
+                // t will go from 0 to 1 in quadsPerLane steps, and then one step where it is 0 again
+                double textureT = ((double) j / (double) quadsPerLane);
+                double t = ((double) j / (double) quadsPerLane) % (double) 1;
                 
-                gl.glVertex3d(0,1,0);
-                gl.glVertex3d(1,1,0);
-                gl.glVertex3d(0,5,1);
-                gl.glVertex3d(1,5,1);
-                gl.glVertex3d(0,5,2);
-                gl.glVertex3d(1,5,2);
+                // Helping vectors
+                middlePoint = getPoint(t);
+                tangentVector = getTangent(t);
+                inwardsVector = new Vector(0, 0, 1).cross(tangentVector).scale(1.22);
                 
+                // Find the two points of this iteration
+                inner = middlePoint.add(inwardsVector.scale(2 - i));
+                outer = middlePoint.add(inwardsVector.scale(1 - i));
+                   
+                double textureY = (textureT * textureRepetitionsLengthwise);
+                double innerTextureX = ((double)i/(double)2);
+                double outerTextureX = innerTextureX + (double)1/(double)2;
+                // Texture the points and glVertex them
+                gl.glTexCoord2d(innerTextureX, textureY);
+                gl.glVertex3d(inner.x, inner.y, inner.z);
+                gl.glTexCoord2d(outerTextureX, textureY);
+                gl.glVertex3d(outer.x, outer.y, outer.z);
             }
             gl.glEnd();
         }
-        gl.glPopMatrix();
     }
-    
-    
+
     /**
-     * Returns the center of a lane at 0 <= t < 1.
-     * Use this method to find the position of a robot on the track.
+     * Returns the center of a lane at 0 <= t < 1. Use this method to find the
+     * position of a robot on the track.
      */
-    public Vector getLanePoint(int lane, double t){
+    public Vector getLanePoint(int lane, double t) {
 
         return Vector.O;
 
     }
-    
+
     /**
-     * Returns the tangent of a lane at 0 <= t < 1.
-     * Use this method to find the orientation of a robot on the track.
+     * Returns the tangent of a lane at 0 <= t < 1. Use this method to find the
+     * orientation of a robot on the track.
      */
-    public Vector getLaneTangent(int lane, double t){
-        
+    public Vector getLaneTangent(int lane, double t) {
+
         return Vector.O;
 
     }
-    
+
 //    public void draw(GL2 gl, GLU glu, GLUT glut) {
-        //top of the track
+    //top of the track
 //        ShaderPrograms.trackShader.useProgram(gl);
 //        Textures.track.enable(gl);
 //        Textures.track.bind(gl);
@@ -174,9 +182,6 @@ abstract class RaceTrack {
 //        return getTangent(t);
 //
 //    }
-    
-    
-    
     // Returns a point on the test track at 0 <= t < 1.
     protected abstract Vector getPoint(double t);
 

@@ -10,7 +10,7 @@ void main()
 	gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
 	vPosition = (gl_ModelViewMatrix * gl_Vertex).xyz / gl_Vertex.w;
 	gl_TexCoord[0] = gl_MultiTexCoord0;
-    gl_FrontColor  = gl_Color;
+        gl_FrontColor  = gl_Color;
 	N = normalize(gl_NormalMatrix * gl_Normal);
 	tangentToEyeMatrix[0] = gl_NormalMatrix * attrTangent;
 	tangentToEyeMatrix[1] = gl_NormalMatrix * attrBitangent;
