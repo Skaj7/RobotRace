@@ -31,5 +31,18 @@ public class BezierTrack extends RaceTrack {
 
     }
     
+        @Override
+    protected Vector getNormal(double t) {
 
+        return Vector.O;
+
+    }
+    
+        @Override
+    protected Vector getInwardVector(double t) {
+        
+        return Vector.O;
+
+    }
+    
 }
