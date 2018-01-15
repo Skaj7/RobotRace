@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/htrym/Documents/Study/Courses/Computer%20Graphics%20(2IV60)/robot-race-git/src/robotrace/RobotRace.java</file>
-            <file>file:/C:/Users/htrym/Documents/Study/Courses/Computer%20Graphics%20(2IV60)/robot-race-git/src/robotrace/Robot.java</file>
-            <file>file:/C:/Users/htrym/Documents/Study/Courses/Computer%20Graphics%20(2IV60)/robot-race-git/nbproject/build-impl.xml</file>
-            <file>jar:file:/C:/Users/htrym/Documents/Study/Courses/Computer%20Graphics%20(2IV60)/robot-race-git/lib/RobotRaceLibrary.jar!/robotrace/GlobalState.java</file>
-            <file>file:/C:/Users/htrym/Documents/Study/Courses/Computer%20Graphics%20(2IV60)/robot-race-git/src/robotrace/ParametricTrack.java</file>
-            <file>file:/C:/Users/htrym/Documents/Study/Courses/Computer%20Graphics%20(2IV60)/robot-race-git/src/robotrace/RaceTrack.java</file>
-            <file>file:/C:/Users/htrym/Documents/Study/Courses/Computer%20Graphics%20(2IV60)/robot-race-git/src/robotrace/Textures.java</file>
+            <file>file:/D:/TUE/Computer%20Graphics/Final/src/robotrace/RaceTrack.java</file>
+            <file>file:/D:/TUE/Computer%20Graphics/Final/src/robotrace/Terrain.java</file>
+            <file>file:/D:/TUE/Computer%20Graphics/Final/src/robotrace/shaderPrograms/Terrain/fragment.glsl</file>
+            <file>file:/D:/TUE/Computer%20Graphics/Final/src/robotrace/shaderPrograms/Robot/vertex.glsl</file>
+            <file>file:/D:/TUE/Computer%20Graphics/Final/src/robotrace/RobotRace.java</file>
+            <file>file:/D:/TUE/Computer%20Graphics/Final/src/robotrace/shaderPrograms/Default/fragment.glsl</file>
+            <file>file:/D:/TUE/Computer%20Graphics/Final/src/robotrace/shaderPrograms/Robot/fragment.glsl</file>
+            <file>file:/D:/TUE/Computer%20Graphics/Final/src/robotrace/shaderPrograms/Terrain/vertex.glsl</file>
         </group>
     </open-files>
 </project-private>
