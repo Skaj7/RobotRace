@@ -229,7 +229,7 @@ public class RobotRace extends Base {
         // Update the robots' t values
         double[] robotTArray = new double[4];
         for(int i = 0; i < 4; i ++) {
-            robotTArray[i] = gs.tAnim/(double)4;
+            robotTArray[i] = gs.tAnim/(double)8;
         }
         
         // Position robots

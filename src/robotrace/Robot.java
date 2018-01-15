@@ -64,8 +64,6 @@ class Robot {
             // Orient robots based on direction
             // Without rotation, they look along (0, 1, 0). We must rotate such that this becomes the direction vector
             double angleBetween = Math.toDegrees(Math.acos(direction.dot(new Vector(0, 1, 0))));
-            System.out.println("direction: " + direction);
-            System.out.println(angleBetween);
             gl.glRotated(angleBetween, 0, 0, position.y > 0 ? 1 : -1);
             
             torso(gl, glut);//0.95
