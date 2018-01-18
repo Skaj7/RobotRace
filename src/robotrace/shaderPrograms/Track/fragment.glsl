@@ -28,7 +28,9 @@ vec4 shading(vec3 pos, vec3 N, gl_LightSourceParameters light, gl_MaterialParame
 	// DIFFUSE	
 	vec4 diffuse = light.diffuse * texture * diffuseStrength;
 	
-	// SPECULAR	
+	// SPECULAR
+	//vec4 specular = light.specular * mat.specular * pow(specularStrength, mat.shininess);
+	
         vec4 specular = light.specular * texture * pow(specularStrength, mat.shininess);
 
 	return emission + ambient + diffuse + specular;
