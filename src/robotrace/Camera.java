@@ -59,8 +59,7 @@ class Camera {
     private void setFirstPersonMode(GlobalState gs, Robot focus) {
         Vector D = focus.direction.normalized();
         
-        //postion of robot + height of the track and robot
-        Vector position = focus.position.add(new Vector(0,0,3));
+        Vector position = focus.position.add(new Vector(0,0,2)).add(D.scale(1.3));
         
         this.eye = position;
         this.center = position.add(D);

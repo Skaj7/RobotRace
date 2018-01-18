@@ -33,7 +33,7 @@ class Robot {
     /**
      * Draws this robot (as a {@code stickfigure} if specified).
      */
-    public void draw(GL2 gl, GLU glu, GLUT glut, float tAnim){//, Vector pos, Vector tangent) {
+    public void draw(GL2 gl, GLU glu, GLUT glut, float tAnim){
         
         gl.glPushMatrix();
             //skybox reflection texture for the gold and silver robot
@@ -46,9 +46,6 @@ class Robot {
             
             gl.glTranslated(position.x, position.y, position.z);
 
-            //inmobile
-            //gl.glRotated(-10, 1, 0, 0);
-            
             // Orient robots based on direction
             // Without rotation, they look along (0, 1, 0). We must rotate such that this becomes the direction vector
             double angleBetween = Math.toDegrees(Math.acos(direction.dot(new Vector(0, 1, 0))));

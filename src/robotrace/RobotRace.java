@@ -71,6 +71,8 @@ public class RobotRace extends Base {
     
     /** Instance of the terrain. */
     private final Terrain terrain;
+    
+    private final double[] robotTArray;
         
     /**
      * Constructs this robot race by initializing robots,
@@ -121,13 +123,13 @@ public class RobotRace extends Base {
         // Initialize the terrain
         terrain = new Terrain();
         
-        // How far each robot has run
-        double[] robotTArray = new double[4];
+        // How far each robot has run. Initially 0 for all robots
+        robotTArray = new double[4];
         for(int i = 0; i < 4; i ++) {
             robotTArray[i] = 0;
         }
         
-        // Position robots at start line
+        // Position robots based on robotTArray
         robots[0].position = raceTracks[gs.trackNr].getLanePoint(0, robotTArray[0]);
         robots[1].position = raceTracks[gs.trackNr].getLanePoint(1, robotTArray[1]);
         robots[2].position = raceTracks[gs.trackNr].getLanePoint(2, robotTArray[2]);
@@ -189,8 +191,13 @@ public class RobotRace extends Base {
         gl.glLightfv(GL_LIGHT0, GL_POSITION, new float[]{0f,0f,0f,1f}, 0);
                
         // Update the view according to the camera mode and robot of interest.
-        // For camera modes 1 to 4, determine which robot to focus on.
-        camera.update(gs, robots[3]);
+        int lastRobot = 0;
+        for(int i = 1; i < 4; i ++) {
+            if (robotTArray[i] < robotTArray[lastRobot]) {
+                lastRobot = i;
+            } 
+        }
+        camera.update(gs, robots[lastRobot]);
         glu.gluLookAt(camera.eye.x(),    camera.eye.y(),    camera.eye.z(),
                       camera.center.x(), camera.center.y(), camera.center.z(),
                       camera.up.x(),     camera.up.y(),     camera.up.z());
@@ -225,9 +232,8 @@ public class RobotRace extends Base {
         }
         
         // Update the robots' t values
-        double[] robotTArray = new double[4];
         for(int i = 0; i < 4; i ++) {
-            robotTArray[i] = gs.tAnim/(double)8;
+            robotTArray[i] = (0.01*((i+3)%4) + 1)*gs.tAnim/(double)8;
         }
         
         // Position robots

@@ -1,5 +1,7 @@
 package robotrace;
 
+import static com.jogamp.opengl.GL.GL_BLEND;
+import static com.jogamp.opengl.GL.GL_FRONT;
 import static com.jogamp.opengl.GL.GL_REPEAT;
 import static com.jogamp.opengl.GL.GL_TEXTURE_2D;
 import static com.jogamp.opengl.GL.GL_TEXTURE_WRAP_S;
@@ -8,11 +10,15 @@ import com.jogamp.opengl.util.gl2.GLUT;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.glu.GLU;
 import static com.jogamp.opengl.GL2.*;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_DIFFUSE;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_SHININESS;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_SPECULAR;
 
 /**
  * Implementation of a race track that is made from Bezier segments.
  */
 abstract class RaceTrack {
+    private final Material material = Material.WOOD;
 
     /**
      * The width of one lane. The total width of the track is 4 * laneWidth.
@@ -36,21 +42,10 @@ abstract class RaceTrack {
      */
     public void draw(GL2 gl, GLU glu, GLUT glut) {
         
-        // show center TODO debug
-        /*
-        gl.glLineWidth(3.0f);
-        gl.glColor3d(90,0,0);
-        gl.glBegin(GL2.GL_LINES);
-        for (int i = 0; i < 100; i++) {
-            double t = (double) i / 100;
-            Vector centerPoint = getPoint(t);
-            Vector tangentVector = getTangent(t);
-            Vector nextPoint = centerPoint.add(tangentVector);
-            gl.glVertex3d(centerPoint.x, centerPoint.y, centerPoint.z);
-            gl.glVertex3d(nextPoint.x, nextPoint.y, nextPoint.z);
-        }
-        gl.glEnd();
-        */
+        // Set the material
+        gl.glMaterialfv(GL_FRONT,GL_DIFFUSE, material.diffuse,0);
+        gl.glMaterialfv(GL_FRONT,GL_SPECULAR, material.specular,0);
+        gl.glMaterialfv(GL_FRONT,GL_SHININESS, new float[] {material.shininess},0);  
         
         // Load track top texture and make it repeat
         Textures.track.bind(gl);
