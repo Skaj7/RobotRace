@@ -1,7 +1,11 @@
 package robotrace;
 
 import static com.jogamp.opengl.GL.GL_BLEND;
+import static com.jogamp.opengl.GL.GL_FRONT;
 import static com.jogamp.opengl.GL2.*;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_DIFFUSE;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_SHININESS;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_SPECULAR;
 import static robotrace.ShaderPrograms.*;
 import static robotrace.Textures.*;
 
@@ -155,7 +159,7 @@ public class RobotRace extends Base {
         // gl.glCullFace(GL_BACK);
         // gl.glEnable(GL_CULL_FACE);
         
-	    // Normalize normals.
+	// Normalize normals.
         gl.glEnable(GL_NORMALIZE);
         
 	// Try to load four textures, add more if you like in the Textures class         
@@ -226,7 +230,7 @@ public class RobotRace extends Base {
         
         gl.glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         
-// Draw the axis frame.
+        // Draw the axis frame.
         if (gs.showAxes) {
             drawAxisFrame();
         }
@@ -250,10 +254,10 @@ public class RobotRace extends Base {
         
         // Draw robots
         gl.glUseProgram(robotShader.getProgramID()); 
-        robots[0].draw(gl, glu, glut, gs.tAnim);//, raceTracks[0].getLanePoint(0, gs.tAnim/3), raceTracks[0].getLaneTangent(0, gs.tAnim/3));
-        robots[1].draw(gl, glu, glut, gs.tAnim);//, raceTracks[0].getLanePoint(1, gs.tAnim/20), raceTracks[0].getLaneTangent(1, gs.tAnim/20));
-        robots[2].draw(gl, glu, glut, gs.tAnim);//,raceTracks[0].getLanePoint(2, gs.tAnim/20), raceTracks[0].getLaneTangent(2, gs.tAnim/20));   
-        robots[3].draw(gl, glu, glut, gs.tAnim);//,raceTracks[0].getLanePoint(3, gs.tAnim/20), raceTracks[0].getLaneTangent(3, gs.tAnim/20));
+        robots[0].draw(gl, glu, glut, gs.tAnim);
+        robots[1].draw(gl, glu, glut, gs.tAnim);
+        robots[2].draw(gl, glu, glut, gs.tAnim);
+        robots[3].draw(gl, glu, glut, gs.tAnim);
         
         // Draw the race track.
         gl.glUseProgram(trackShader.getProgramID());
@@ -263,6 +267,10 @@ public class RobotRace extends Base {
         gl.glUseProgram(terrainShader.getProgramID());
         terrain.draw(gl, glu, glut);
         reportError("terrain:");
+        
+        // Draw trees
+        gl.glUseProgram(robotShader.getProgramID());
+        drawTrees();
     }
     
     /**
@@ -353,5 +361,47 @@ public class RobotRace extends Base {
     public static void main(String args[]) {
         RobotRace robotRace = new RobotRace();
         robotRace.run();
+    }
+    
+    
+    private void drawTrees() {
+        drawTree(2, 2, 1);
+        drawTree(4.4f, -1, 0.9f);
+        drawTree(18, 10, 1.4f);
+        drawTree(17, 5, 1.2f);
+        drawTree(16, -3, 1.1f);
+        drawTree(15, 13, 1.3f);
+        drawTree(-18, 10, 1f);
+        drawTree(-2, -2, 1);
+        drawTree(-3, 4, 1.2f);
+    }
+    private void drawTree(float x, float y, float scale) {
+        gl.glPushMatrix(); 
+        gl.glTranslated(x, y, 0);
+        gl.glScaled(scale, scale, scale);
+        // Draw tree trunk
+        Material material = Material.WOOD;
+        gl.glMaterialfv(GL_FRONT,GL_DIFFUSE, material.diffuse,0);
+        gl.glMaterialfv(GL_FRONT,GL_SPECULAR, material.specular,0);
+        gl.glMaterialfv(GL_FRONT,GL_SHININESS, new float[] {material.shininess},0);
+        glut.glutSolidCylinder(0.7, 1.3, 10, 5);
+        gl.glTranslated(0, 0, 1.1);
+        
+        // Draw tree top
+        material = Material.LEAF;
+        gl.glMaterialfv(GL_FRONT,GL_DIFFUSE, material.diffuse,0);
+        gl.glMaterialfv(GL_FRONT,GL_SPECULAR, material.specular,0);
+        gl.glMaterialfv(GL_FRONT,GL_SHININESS, new float[] {material.shininess},0);
+        glut.glutSolidCone(2, 3, 10, 5);
+        glut.glutSolidCone(2, 0, 10, 5);
+        gl.glTranslated(0, 0, 1.5);
+        gl.glScaled(0.8, 0.8, 0.8);
+        glut.glutSolidCone(2, 3, 10, 5);
+        glut.glutSolidCone(2, 0, 10, 5);
+        gl.glTranslated(0, 0, 1.5);
+        gl.glScaled(0.8, 0.8, 0.8);
+        glut.glutSolidCone(2, 3, 10, 5);
+        glut.glutSolidCone(2, 0, 10, 5);
+        gl.glPopMatrix();
     }
 }

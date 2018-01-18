@@ -24,7 +24,7 @@ abstract class RaceTrack {
      * The width of one lane. The total width of the track is 4 * laneWidth.
      */
     private final static float laneWidth = 1.22f;
-    private final static double quadsPerLane = 100;
+    private final static double quadsPerLane = 50;
     private final static double topTextureRepetitions = 10;
     private final static double sideTextureRepetitionsLengthwise = 100;
     private final static double sideTextureRepetitionsCrosswise = 2;

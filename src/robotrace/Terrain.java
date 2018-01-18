@@ -45,7 +45,7 @@ class Terrain {
                 gl.glVertex3d(20, -20, 0);
             gl.glEnd();
         gl.glPopMatrix();
-        
+        gl.glDisable(GL_BLEND);
     }
 }
     

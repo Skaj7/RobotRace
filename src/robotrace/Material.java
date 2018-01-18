@@ -4,6 +4,13 @@ package robotrace;
 * Materials that can be used for the robots.
 */
 public enum Material {
+    LEAF (
+        new float[] {0f, 153/255f, 0f, 1},
+        new float[] {0f, 153/255f, 0f, 1},
+        20f 
+            
+    ),
+    
 
     /** 
      * Gold material properties.
