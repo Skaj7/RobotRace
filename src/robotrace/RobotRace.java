@@ -3,7 +3,9 @@ package robotrace;
 import static com.jogamp.opengl.GL.GL_BLEND;
 import static com.jogamp.opengl.GL.GL_FRONT;
 import static com.jogamp.opengl.GL2.*;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_AMBIENT;
 import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_DIFFUSE;
+import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_LIGHT0;
 import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_SHININESS;
 import static com.jogamp.opengl.fixedfunc.GLLightingFunc.GL_SPECULAR;
 import static robotrace.ShaderPrograms.*;
@@ -193,7 +195,8 @@ public class RobotRace extends Base {
         
         // Add light source
         gl.glLightfv(GL_LIGHT0, GL_POSITION, new float[]{0f,0f,0f,1f}, 0);
-               
+        gl.glLightfv(GL_LIGHT0, GL_AMBIENT, new float[]{0.5f,0.5f,0.5f,1f}, 0);  
+       
         // Update the view according to the camera mode and robot of interest.
         int lastRobot = 0;
         for(int i = 1; i < 4; i ++) {

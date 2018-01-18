@@ -83,10 +83,10 @@ class Robot {
         gl.glPopMatrix();
     }
     
-    public void leftLeg(GL2 gl,GLUT glut, float tAnim){
+        public void leftLeg(GL2 gl,GLUT glut, float tAnim){
         gl.glPushMatrix();
             gl.glTranslated(-0.15, 0, 0);
-            leg(gl,glut,Math.sin(tAnim*3));
+            thigh(gl,glut,Math.sin(tAnim*3));
             gl.glTranslated(0.15, 0, 0);
         gl.glPopMatrix();
     }
@@ -94,23 +94,15 @@ class Robot {
     public void rightLeg(GL2 gl,GLUT glut, float tAnim){
         gl.glPushMatrix();
             gl.glTranslated(0.15, 0, 0);
-            leg(gl,glut,Math.cos(tAnim*3));
+            thigh(gl,glut,Math.cos(tAnim*3));
             gl.glTranslated(-0.15, 0, 0);
         gl.glPopMatrix();
     }
     
-    public void leg(GL2 gl,GLUT glut, double d){
-        //hip + thigh
-        double angle = d*100;
-        thigh(gl,glut,angle);
-        //Knee + shin
-        angle = d*160;
-        shin(gl,glut,angle);
-        //foot
-        foot(gl,glut,angle);
-    }
-    public void thigh(GL2 gl,GLUT glut, double angle){
+    public void thigh(GL2 gl,GLUT glut, double d){
         //Hip + thigh
+        //angle of movement
+        double angle = d*100;
         gl.glTranslated(0, 0, 0.9);
         
         if(angle < 0){
@@ -125,11 +117,16 @@ class Robot {
         gl.glScaled(0.15, 0.15, 0.45);
         glut.glutSolidCube(1f);
         gl.glScaled(1/0.15, 1/0.15, 1/0.45);
+        
+        //Knee + shin
+        angle = d*160;
+        shin(gl,glut,angle);
     }
     public void shin(GL2 gl,GLUT glut, double angle){
         //Knee + shin
         gl.glTranslated(0, 0, -0.25);
         
+        //angle of movement
         if(angle > 0){
             angle=angle*-1;
         }
@@ -144,8 +141,11 @@ class Robot {
         gl.glScaled(0.15, 0.15, 0.45);
         glut.glutSolidCube(1f);
         gl.glScaled(1/0.15, 1/0.15, 1/0.45);
+        
+        //foot
+        foot(gl,glut);
     }
-    public void foot(GL2 gl,GLUT glut, double tAnim){
+    public void foot(GL2 gl,GLUT glut){
         //foot
         gl.glTranslated(0, 0.05, -0.25);
         gl.glScaled(0.1, 0.15, 0.1);
@@ -158,7 +158,7 @@ class Robot {
     public void leftArm(GL2 gl,GLUT glut, float tAnim){
         gl.glPushMatrix();
             gl.glTranslated(-0.33, 0, 0);
-            arm(gl,glut,Math.sin(tAnim*3));
+            upperArm(gl,glut,Math.sin(tAnim*3));
             gl.glTranslated(0.33, 0, 0);
         gl.glPopMatrix();
     }
@@ -166,22 +166,16 @@ class Robot {
     public void rightArm(GL2 gl,GLUT glut,float tAnim){
         gl.glPushMatrix();
             gl.glTranslated(0.33, 0, 0);
-            arm(gl,glut,Math.cos(tAnim*3));
+            upperArm(gl,glut,Math.cos(tAnim*3));
             gl.glTranslated(-0.33, 0, 0);
         gl.glPopMatrix();
     }
     
-    public void arm(GL2 gl,GLUT glut,double d){
+    public void upperArm(GL2 gl,GLUT glut,double d){
         //sholder+ upperarm
+        //angle of movement
         double angle = d*40;
-        upperArm(gl, glut, angle);
-        //elbow + forearm + hand
-        angle = d*5;
-        forearm(gl, glut, angle);
-    }
-    
-    public void upperArm(GL2 gl,GLUT glut,double angle){
-        //sholder+ upperarm
+        
         gl.glTranslated(0, 0, 1.65);
         
         if(angle > 0){
@@ -196,6 +190,11 @@ class Robot {
         gl.glScaled(0.1, 0.1, 0.3);
         glut.glutSolidCube(1f);
         gl.glScaled(10, 10, 1/0.3);
+        
+        //elbow + forearm + hand
+        //angle of movement
+        angle = d*5;
+        forearm(gl, glut, angle);
     }
     public void forearm(GL2 gl,GLUT glut,double angle){
         
@@ -210,6 +209,10 @@ class Robot {
         glut.glutSolidCube(1f);
         gl.glScaled(10, 10, 1/0.3);
 
+        hand(gl,glut);
+    }
+    
+    public void hand(GL2 gl,GLUT glut){
         gl.glTranslated(0, 0.05, -0.2);
         gl.glScaled(0.1, 0.15, 0.1);
         glut.glutSolidSphere(1, 50, 50);
