@@ -6,7 +6,7 @@ package robotrace;
  */
 public class ParametricTrack extends RaceTrack {
     
-    @Override
+   @Override
     protected Vector getPoint(double t) {
         t = t % 1;
         return new Vector(10*Math.cos(2*Math.PI*t),14*Math.sin(2*Math.PI*t),1);
@@ -19,8 +19,7 @@ public class ParametricTrack extends RaceTrack {
         return new Vector(-20*Math.PI*Math.sin(2*Math.PI*t),28*Math.PI*Math.cos(2*Math.PI*t),0).normalized();
 
     }
-    
-    @Override
+        @Override
     protected Vector getNormal(double t) {
         t = t % 1;
         return new Vector(0, 0, -1).cross(getTangent(t));

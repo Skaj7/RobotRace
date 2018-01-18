@@ -1,5 +1,6 @@
 package robotrace;
 
+import static com.jogamp.opengl.GL.GL_BLEND;
 import static com.jogamp.opengl.GL2.*;
 import static robotrace.ShaderPrograms.*;
 import static robotrace.Textures.*;
@@ -70,8 +71,7 @@ public class RobotRace extends Base {
     
     /** Instance of the terrain. */
     private final Terrain terrain;
-       
-    
+        
     /**
      * Constructs this robot race by initializing robots,
      * camera, track, and terrain.
@@ -164,8 +164,6 @@ public class RobotRace extends Base {
         ShaderPrograms.setupShaders(gl, glu);
         reportError("shaderProgram");
         
-        
-        
     }
    
     /**
@@ -192,7 +190,7 @@ public class RobotRace extends Base {
                
         // Update the view according to the camera mode and robot of interest.
         // For camera modes 1 to 4, determine which robot to focus on.
-        camera.update(gs, robots[0]);
+        camera.update(gs, robots[3]);
         glu.gluLookAt(camera.eye.x(),    camera.eye.y(),    camera.eye.z(),
                       camera.center.x(), camera.center.y(), camera.center.z(),
                       camera.up.x(),     camera.up.y(),     camera.up.z());
@@ -220,8 +218,8 @@ public class RobotRace extends Base {
         gl.glColor3f(0f, 0f, 0f);
         
         gl.glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-        // Draw the axis frame.
+        
+// Draw the axis frame.
         if (gs.showAxes) {
             drawAxisFrame();
         }
@@ -259,8 +257,6 @@ public class RobotRace extends Base {
         gl.glUseProgram(terrainShader.getProgramID());
         terrain.draw(gl, glu, glut);
         reportError("terrain:");
-        
-        
     }
     
     /**
@@ -268,8 +264,8 @@ public class RobotRace extends Base {
      * and origin (yellow).
      */
     public void drawAxisFrame() {
-            //Origin
-        gl.glPushMatrix();
+        //Origin
+         gl.glPushMatrix();
             gl.glColor3d(90,90,0);
             glut.glutSolidSphere(0.2, 50, 50);
         gl.glPopMatrix();

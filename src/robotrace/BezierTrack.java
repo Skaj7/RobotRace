@@ -13,8 +13,6 @@ public class BezierTrack extends RaceTrack {
     BezierTrack(Vector[] controlPoints) {
         this.controlPoints = controlPoints;
         
-
-
     }
     
     @Override
@@ -30,7 +28,6 @@ public class BezierTrack extends RaceTrack {
         return Vector.O;
 
     }
-    
         @Override
     protected Vector getNormal(double t) {
 
@@ -44,5 +41,5 @@ public class BezierTrack extends RaceTrack {
         return Vector.O;
 
     }
-    
+
 }

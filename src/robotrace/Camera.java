@@ -48,7 +48,7 @@ class Camera {
         this.eye = gs.cnt.add(V);
         
         //set center and z axis
-        this.center = new Vector(0,0,0);
+        this.center = gs.cnt;
         this.up = Vector.Z;
     }
 
@@ -57,6 +57,13 @@ class Camera {
      * The camera should view from the perspective of the robot.
      */
     private void setFirstPersonMode(GlobalState gs, Robot focus) {
-
+        Vector D = focus.direction.normalized();
+        
+        //postion of robot + height of the track and robot
+        Vector position = focus.position.add(new Vector(0,0,3));
+        
+        this.eye = position;
+        this.center = position.add(D);
+        this.up = Vector.Z;
     }
 }
